@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QRect>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,12 +17,18 @@ MainWindow::MainWindow(QWidget *parent) :
     trem5 = new Trem(5,550,150);
     */
 
-    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y()); // 60,30
-    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y()); // 330,30
+    Trava *trava1 =  new Trava(ui->label_trilho3->geometry(), false);
+    std::vector<Trava*> travas;
+    travas.push_back(trava1);
 
+    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travas); // 60,30
+    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travas); // 330,30
+    /*
     trem3 = new Trem(3,ui->label_trem3->x(),ui->label_trem3->y());
     trem4 = new Trem(4,ui->label_trem4->x(),ui->label_trem4->y());
     trem5 = new Trem(5,ui->label_trem5->x(),ui->label_trem5->y());
+    */
+
 
 
 
@@ -36,10 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
      */
     connect(trem1,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem2,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    /*
     connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-
+    */
 
 
 }
@@ -79,9 +87,11 @@ void MainWindow::on_pushButton_clicked()
 {
     trem1->start();
     trem2->start();
+    /*
     trem3->start();
     trem4->start();
     trem5->start();
+    */
 }
 
 /*
@@ -91,9 +101,11 @@ void MainWindow::on_pushButton_2_clicked()
 {
     trem1->terminate();
     trem2->terminate();
+    /*
     trem3->terminate();
     trem4->terminate();
     trem5->terminate();
+    */
 }
 
 void MainWindow::on_sliderTrem1_valueChanged(int value)
@@ -109,17 +121,17 @@ void MainWindow::on_sliderTrem2_valueChanged(int value)
 
 void MainWindow::on_sliderTrem3_valueChanged(int value)
 {
-    trem3->setVelocidade(200-value);
+    //trem3->setVelocidade(200-value);
 }
 
 void MainWindow::on_sliderTrem4_valueChanged(int value)
 {
-    trem4->setVelocidade(200-value);
+    //trem4->setVelocidade(200-value);
 }
 
 
 void MainWindow::on_sliderTrem5_valueChanged(int value)
 {
-    trem5->setVelocidade(200-value);
+    //trem5->setVelocidade(200-value);
 }
 

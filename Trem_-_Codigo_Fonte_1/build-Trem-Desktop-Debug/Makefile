@@ -54,10 +54,12 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp \
 		../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.cpp \
 		../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp moc_mainwindow.cpp \
 		moc_trem.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		trava.o \
 		trem.o \
 		moc_mainwindow.o \
 		moc_trem.o
@@ -118,6 +120,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../Código QT5 Ubuntu - Trem/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -139,8 +142,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../Código QT5 Ubuntu - Trem/Trem.pro ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h \
 		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp \
 		../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.cpp \
 		../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp
 QMAKE_TARGET  = Trem
 DESTDIR       = 
@@ -210,6 +215,7 @@ Makefile: ../Código\ QT5\ Ubuntu\ -\ Trem/Trem.pro /usr/lib/x86_64-linux-gnu/qt
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -289,6 +295,7 @@ Makefile: ../Código\ QT5\ Ubuntu\ -\ Trem/Trem.pro /usr/lib/x86_64-linux-gnu/qt
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -325,8 +332,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h ../Código\ QT5\ Ubuntu\ -\ Trem/trava.h ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trava.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.ui $(DISTDIR)/
 
 
@@ -364,11 +371,14 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_trem.cpp
 moc_mainwindow.cpp: ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h \
 		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/macedo/IMD0036-Sistemas-Operacionais-Trems/Trem_-_Codigo_Fonte_1/build-Trem-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/macedo/IMD0036-Sistemas-Operacionais-Trems/Trem_-_Codigo_Fonte_1/Código QT5 Ubuntu - Trem' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h -o moc_mainwindow.cpp
 
 moc_trem.cpp: ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/macedo/IMD0036-Sistemas-Operacionais-Trems/Trem_-_Codigo_Fonte_1/build-Trem-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/macedo/IMD0036-Sistemas-Operacionais-Trems/Trem_-_Codigo_Fonte_1/Código QT5 Ubuntu - Trem' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h -o moc_trem.cpp
@@ -395,15 +405,22 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h \
-		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h
+		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Código\ QT5\ Ubuntu\ -\ Trem/main.cpp
 
 mainwindow.o: ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.h \
 		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Código\ QT5\ Ubuntu\ -\ Trem/mainwindow.cpp
 
-trem.o: ../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h
+trava.o: ../Código\ QT5\ Ubuntu\ -\ Trem/trava.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trava.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trem.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trava.o ../Código\ QT5\ Ubuntu\ -\ Trem/trava.cpp
+
+trem.o: ../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp ../Código\ QT5\ Ubuntu\ -\ Trem/trem.h \
+		../Código\ QT5\ Ubuntu\ -\ Trem/trava.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trem.o ../Código\ QT5\ Ubuntu\ -\ Trem/trem.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

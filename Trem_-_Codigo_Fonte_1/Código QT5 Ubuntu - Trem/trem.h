@@ -2,6 +2,8 @@
 #define TREM_H
 
 #include <QThread>
+#include <vector>
+#include "trava.h"
 
 /*
  * Classe Trem herda QThread
@@ -14,9 +16,11 @@ class Trem: public QThread{
  Q_OBJECT
 public:
     Trem(int,int,int);  //construtor
+    Trem(int,int,int, std::vector<Trava*>);
     void run();         //função a ser executada pela thread
     int getVelocidade();
     void setVelocidade(int vel);
+    void CheckSaindo(Trava* trava);
 
 
 //Cria um sinal
@@ -29,6 +33,11 @@ private:
    int ID;          //ID do trem
    int velocidade;  //Velocidade. É o tempo de dormir em milisegundos entre a mudança de posição do trem
    bool podeMover; //Diz se o trem tem velocidade o suficiente para se mover
+   bool checkPossoMover(); //função que analisará cada trava e ver se o trem pode se mexer
+
+   int quantidadeTravas; //diz quantas travas esse trem possui
+   std::vector<Trava*> objetosTrava;
+
 };
 
 #endif // TREM_H
