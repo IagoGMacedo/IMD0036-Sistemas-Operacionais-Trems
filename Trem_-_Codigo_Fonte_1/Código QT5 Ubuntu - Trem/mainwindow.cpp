@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travas); // 60,30
     trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travas); // 330,30
+
     /*
     trem3 = new Trem(3,ui->label_trem3->x(),ui->label_trem3->y());
     trem4 = new Trem(4,ui->label_trem4->x(),ui->label_trem4->y());
