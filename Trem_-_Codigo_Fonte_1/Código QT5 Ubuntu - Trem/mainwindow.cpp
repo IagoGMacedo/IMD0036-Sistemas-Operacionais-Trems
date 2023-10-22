@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QRect>
+#include <utility>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     trem5 = new Trem(5,550,150);
     */
 
-    Trava *trava1 =  new Trava(ui->label_trilho3->geometry(), false);
+    Trava *trava1 =  new Trava(ui->label_trilho3->geometry(), false, std::make_pair(420, 30), std::make_pair(420,150));
     std::vector<Trava*> travas;
     travas.push_back(trava1);
 

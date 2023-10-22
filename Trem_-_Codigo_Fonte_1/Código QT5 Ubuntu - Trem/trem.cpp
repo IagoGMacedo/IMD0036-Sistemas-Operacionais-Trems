@@ -1,6 +1,11 @@
 #include "trem.h"
 #include <QtCore>
 #include <iostream>
+#include <semaphore.h>
+#include <utility>
+
+sem_t s[7];
+sem_t mutex;
 
 
 //Construtor
@@ -8,6 +13,7 @@ Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
     this->y = y;
+    saindo = 1;
     velocidade = 100;
     podeMover = true;
 }
@@ -43,25 +49,41 @@ void Trem::run(){
             */
             switch(ID){
                     case 1:     //Trem 1
-                        if (y == 30 && x <420)
+                        if (y == 30 && x <420){
+                            saindo = 0;
                             x+=10;
-                        else if (x == 420 && y < 150)
+                        }
+                        else if (x == 420 && y < 150){
                             y+=10;
-                        else if (x > 150 && y == 150)
+                            saindo = 1;
+                        }
+                        else if (x > 150 && y == 150){
                             x-=10;
-                        else
+                            saindo = 1;
+                        }
+                        else{
                             y-=10;
+                            saindo = 0;
+                        }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
                     case 2: //Trem 2
-                        if (y == 30 && x <690)
+                        if (y == 30 && x <690){
                             x+=10;
-                        else if (x == 690 && y < 150)
+                            saindo = 0;
+                        }
+                        else if (x == 690 && y < 150){
                             y+=10;
-                        else if (x > 420 && y == 150)
+                            saindo = 1;
+                        }
+                        else if (x > 420 && y == 150){
                             x-=10;
-                        else
+                            saindo = 1;
+                        }
+                        else{
                             y-=10;
+                            saindo = 0;
+                        }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
                     default:
@@ -103,6 +125,13 @@ bool Trem::checkPossoMover(){
     }
     return false;
 
+}
+
+int Trem::verificaAndar(std::vector<Trava *> travas){
+    for(Trava* trava : travas){
+        trava->getEntradaTrava();
+    }
+    return 0;
 }
 
 void Trem::CheckSaindo(Trava* trava){

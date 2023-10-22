@@ -2,11 +2,14 @@
 #define TRAVA_H
 #include <QtWidgets>
 #include <QMutex>
+#include <utility>
 
 class Trava: public QMutex{
 public:
     bool caminhoHorizontal; //indica se o caminho é horizontal ou vertical
-    Trava(QRect p_geometria, bool p_caminhoHorizontal);
+    std::pair<int, int> entradaTrava;
+    std::pair<int, int> saidaTrava;
+    Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> entrada, std::pair<int,int> saida);
     QRect geometria;
     bool caminhoLivre;
     int idTremPercorrendo; //caso tenha algum trem percorrendo, fica nesse id aqui
@@ -14,6 +17,8 @@ public:
     //Trem objetosTrems[2]; //vetor de trems que podem passar por aquela trava
 
     bool estaPerto(int x, int y); //função que diz se o trem está na eminencia de entrar ou não
+    std::pair<int, int> getEntradaTrava();
+    std::pair<int, int> getSaidaTrava();
 };
 
 #endif // TRAVA_H

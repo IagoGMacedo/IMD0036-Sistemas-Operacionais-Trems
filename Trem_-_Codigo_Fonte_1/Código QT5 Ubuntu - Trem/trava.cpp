@@ -1,12 +1,14 @@
 #include "trava.h"
 #include <iostream>
+#include <utility>
 
-Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal)
-{
+Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> entrada, std::pair<int,int> saida){
     geometria = p_geometria;
     caminhoLivre = true;
     caminhoHorizontal = p_caminhoHorizontal;
     idTremPercorrendo = -1;
+    entradaTrava = entrada;
+    saidaTrava = saida;
 
 }
 
@@ -22,4 +24,12 @@ bool Trava::estaPerto(int x, int y){
             return true;
         }
     return false;
+}
+
+std::pair<int, int> Trava::getEntradaTrava(){
+    return this->entradaTrava;
+}
+
+std::pair<int,int> Trava::getSaidaTrava(){
+    return this->saidaTrava;
 }
