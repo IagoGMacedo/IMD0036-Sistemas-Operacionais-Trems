@@ -36,6 +36,8 @@ private:
    std::vector<int> minhasTravas;
    bool checkPossoMover(); //função que analisará cada trava e ver se o trem pode se mexer
    int verificaAndar(std::vector<Trava*> travas);
+   void sairTrava(int x, int y);
+   void entrarTrava(int x, int y);
 
    int quantidadeTravas; //diz quantas travas esse trem possui
    std::vector<Trava*> objetosTrava;

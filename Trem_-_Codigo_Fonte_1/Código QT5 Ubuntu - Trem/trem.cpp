@@ -98,18 +98,43 @@ void Trem::run(){
 
 bool Trem::checkPossoMover(){
     if(podeMover){
+        int verificar = verificaAndar(objetosTrava);
+        if (verificar == 0){
+            return true;
+        }
+        else if(verificar == 1){
+            sem_wait(&mutex);
+            entrarTrava(x,y);
+            sem_post(&mutex);
+        }
+        else if(verificar == 2){
+            sem_wait(&mutex);
+            sairTrava(x,y);
+            sem_post(&mutex);
+        }
+        else if(verificar == 3){
+
+        }
+        return true;
+        /*
         switch(verificaAndar(objetosTrava)){
         case 0:
             return true;
             break;
         case 1:
-            //sem_wait(&mutex);
-            break;
+            sem_wait(&mutex);
+            entrarTrava(x,y);
+            sem_post(&mutex);
         case 2:
+            sem_wait(&mutex);
+            sairTrava(x,y);
+            sem_post(&mutex);
             break;
         case 3:
             break;
        }
+        return true;
+       */
     }
     return false;
 }
@@ -129,6 +154,30 @@ int Trem::verificaAndar(std::vector<Trava *> travas){
         return 2;
     }
     return 0;
+}
+void Trem::entrarTrava(int x, int y){
+    int indice;
+    for(int i = 0; i < minhasTravas.size(); i++){
+        std::pair<int, int> entrada = objetosTrava[minhasTravas[i]]->getEntradaTrava();
+        std::pair<int, int> saida = objetosTrava[minhasTravas[i]]->getSaidaTrava();
+        if((x == entrada.first - 20 && y == entrada.second) || (x == saida.first + 20 && y == saida.second)){
+            indice = i;
+            break;
+        }
+    }
+    sem_wait(&s[indice]);
+}
+void Trem::sairTrava(int x, int y){
+    int indice;
+    for(int i = 0; i < minhasTravas.size(); i++){
+        std::pair<int, int> entrada = objetosTrava[minhasTravas[i]]->getEntradaTrava();
+        std::pair<int, int> saida = objetosTrava[minhasTravas[i]]->getSaidaTrava();
+        if((x == entrada.first && y == entrada.second + 20) || (x == saida.first && y == saida.second -20)){
+            indice = i;
+            break;
+        }
+    }
+    sem_post(&s[indice]);
 }
 
 int Trem::getVelocidade(){
