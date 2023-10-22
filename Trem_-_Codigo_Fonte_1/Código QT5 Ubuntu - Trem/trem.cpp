@@ -18,13 +18,14 @@ Trem::Trem(int ID, int x, int y){
     podeMover = true;
 }
 
-Trem::Trem(int ID, int x, int y, std::vector<Trava*> trava){
+Trem::Trem(int ID, int x, int y, std::vector<Trava*> trava, std::vector<int> minhasTravas){
     this->ID = ID;
     this->x = x;
     this->y = y;
     velocidade = 100;
     podeMover = true;
     objetosTrava = trava;
+    this->minhasTravas = minhasTravas;
 }
 
 //Função a ser executada após executar trem->START
@@ -128,8 +129,10 @@ bool Trem::checkPossoMover(){
 }
 
 int Trem::verificaAndar(std::vector<Trava *> travas){
-    for(Trava* trava : travas){
-        trava->getEntradaTrava();
+    for(int i = 0; i < minhasTravas.size(); i++){
+        std::pair<int, int> t = travas[minhasTravas[i]]->getEntradaTrava();
+        std::pair<int, int> t2 = travas[minhasTravas[i]]->getSaidaTrava();
+
     }
     return 0;
 }

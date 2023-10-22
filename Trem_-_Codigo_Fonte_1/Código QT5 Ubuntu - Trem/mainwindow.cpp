@@ -21,9 +21,10 @@ MainWindow::MainWindow(QWidget *parent) :
     Trava *trava1 =  new Trava(ui->label_trilho3->geometry(), false, std::make_pair(420, 30), std::make_pair(420,150));
     std::vector<Trava*> travas;
     travas.push_back(trava1);
-
-    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travas); // 60,30
-    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travas); // 330,30
+    std::vector<int> idTravasTrem;
+    idTravasTrem.push_back(0);
+    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travas, idTravasTrem); // 60,30
+    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travas, idTravasTrem); // 330,30
 
     /*
     trem3 = new Trem(3,ui->label_trem3->x(),ui->label_trem3->y());

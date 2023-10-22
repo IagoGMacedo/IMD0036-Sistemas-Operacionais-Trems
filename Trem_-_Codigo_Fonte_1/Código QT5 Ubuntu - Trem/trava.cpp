@@ -13,16 +13,21 @@ Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> ent
 }
 
 bool Trava::estaPerto(int x, int y){
-    std::cout << "X da label "<<geometria.x() << "Y da label"<<geometria.y()<<std::endl;
-    std::cout << "X parametro "<<x << "Y parametro"<<y<<std::endl;
-    if(caminhoHorizontal){
-        if(geometria.x() == x && (geometria.y() == y+20 || geometria.y() == y-20)){
-            return true;
-        }
-    } else if(geometria.y() == y && (geometria.x() == x+20 || geometria.x()) == x-20){
-        std::cout << "true" <<std::endl;
-            return true;
-        }
+    std::cout << "X da entrada "<< entradaTrava.first << "Y da entrada"<<entradaTrava.second<<std::endl;
+    std::cout << "X da saida "<< saidaTrava.first << "Y da saida"<<saidaTrava.second<<std::endl;
+    std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
+    std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
+
+    //vertical
+    if(x == entradaTrava.first - 20 && y == entradaTrava.second){
+        std::cout << "true com - 20 "<<y<<std::endl;
+        return true;
+    }
+    if(x == saidaTrava.first + 20 && y == entradaTrava.second){
+        std::cout << "true com + 20 "<<y<<std::endl;
+        return true;
+    }
+    std::cout << "false"<<y<<std::endl;
     return false;
 }
 
