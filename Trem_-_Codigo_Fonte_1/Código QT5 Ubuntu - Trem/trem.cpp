@@ -92,56 +92,43 @@ void Trem::run(){
                     }
             emit updateGUI(ID, x,y);    //Emite um sinal
             msleep(velocidade);
-            for(Trava* trava : objetosTrava){
-                std::cout << "id da trava: "<< trava->idTremPercorrendo<<std::endl;
-            }
         }
     }
 }
 
 bool Trem::checkPossoMover(){
     if(podeMover){
-        //QMutex mutex;
-        //mutex.lock();
-        for(Trava* trava : objetosTrava){
-
-            std::cout <<"caminho está livre: "<< trava->caminhoLivre <<std::endl;
-            std::cout <<"id trava: "<< trava->idTremPercorrendo << std::endl;
-            std::cout <<"id trem: "<< this->ID << std::endl;
-            if(trava->estaPerto(x,y)){
-                std::cout << "eu sou a thread "<<ID<<"X: "<<x<<" Y"<<y<<std::endl;
-                //std::cout << trava->caminhoLivre << " " << trava->idTremPercorrendo <<" " << ID << std::endl;
-                if(!trava->caminhoLivre){
-                    return false;
-                }else{
-                    std::cout << "entrei aqui: "<<this->ID <<std::endl;
-                    trava->caminhoLivre = false;
-                    trava->idTremPercorrendo = ID;
-                    CheckSaindo(trava);
-                }
-            }
-            //mutex.unlock();
-        }
-        return true;
+        switch(verificaAndar(objetosTrava)){
+        case 0:
+            return true;
+            break;
+        case 1:
+            //sem_wait(&mutex);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+       }
     }
     return false;
-
 }
 
 int Trem::verificaAndar(std::vector<Trava *> travas){
+    int result[3]= {0, 0, 0};
     for(int i = 0; i < minhasTravas.size(); i++){
-        std::pair<int, int> t = travas[minhasTravas[i]]->getEntradaTrava();
-        std::pair<int, int> t2 = travas[minhasTravas[i]]->getSaidaTrava();
-
+        result[travas[minhasTravas[i]]->estaPerto(this->x, this->y)] += 1;
+    }
+    if(result[1] > 0 && result[2] > 0){
+        return 3;
+    }
+    if(result[1] > 0){
+        return 1;
+    }
+    if(result[2] > 0){
+        return 2;
     }
     return 0;
-}
-
-void Trem::CheckSaindo(Trava* trava){
-    if(trava->geometria.x() == x+10 || trava->geometria.y() == y+10 ||  trava->geometria.x() == x-10 || trava->geometria.y() == y-10){
-       trava->caminhoLivre = true;
-       trava->idTremPercorrendo = 0;
-    }
 }
 
 int Trem::getVelocidade(){

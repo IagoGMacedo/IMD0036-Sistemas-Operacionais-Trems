@@ -20,7 +20,6 @@ public:
     void run();         //função a ser executada pela thread
     int getVelocidade();
     void setVelocidade(int vel);
-    void CheckSaindo(Trava* trava);
 
 
 //Cria um sinal

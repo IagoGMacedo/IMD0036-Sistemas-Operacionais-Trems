@@ -4,7 +4,6 @@
 
 Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> entrada, std::pair<int,int> saida){
     geometria = p_geometria;
-    caminhoLivre = true;
     caminhoHorizontal = p_caminhoHorizontal;
     idTremPercorrendo = -1;
     entradaTrava = entrada;
@@ -12,23 +11,24 @@ Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> ent
 
 }
 
-bool Trava::estaPerto(int x, int y){
-    std::cout << "X da entrada "<< entradaTrava.first << "Y da entrada"<<entradaTrava.second<<std::endl;
-    std::cout << "X da saida "<< saidaTrava.first << "Y da saida"<<saidaTrava.second<<std::endl;
-    std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
-    std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
+int Trava::estaPerto(int x, int y){
+    //std::cout << "X da entrada "<< entradaTrava.first << "Y da entrada"<<entradaTrava.second<<std::endl;
+    //std::cout << "X da saida "<< saidaTrava.first << "Y da saida"<<saidaTrava.second<<std::endl;
+    //std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
+    //std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
 
-    //vertical
-    if(x == entradaTrava.first - 20 && y == entradaTrava.second){
-        std::cout << "true com - 20 "<<y<<std::endl;
-        return true;
+    //entrando
+    if((x == entradaTrava.first - 20 && y == entradaTrava.second) || (x == saidaTrava.first + 20 && y == saidaTrava.second)){
+        //std::cout << "true com - 20 "<<y<<std::endl;
+        return 1;
     }
-    if(x == saidaTrava.first + 20 && y == entradaTrava.second){
-        std::cout << "true com + 20 "<<y<<std::endl;
-        return true;
+    //saindo
+    if((x == entradaTrava.first && y == entradaTrava.second + 20) || (x == saidaTrava.first && y == saidaTrava.second -20)){
+        return 2;
     }
-    std::cout << "false"<<y<<std::endl;
-    return false;
+
+    //longe
+    return 0;
 }
 
 std::pair<int, int> Trava::getEntradaTrava(){
