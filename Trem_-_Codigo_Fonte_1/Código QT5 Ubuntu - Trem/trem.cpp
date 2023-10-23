@@ -34,7 +34,7 @@ void Trem::run(){
     int posInicialVert = y;
     */
     while(true){
-        while(checkPossoMover()){
+        while(velocidadeNaoZerada){
             /*
             if (y == posInicialVert && x <tamPercursoHoriz)
                 x+=10;
@@ -50,17 +50,47 @@ void Trem::run(){
                         if (y == 30 && x <420){
                             sentidoNormal = true;
                             x+=10;
+                            if (x == 400){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[0]);
+                            }
                         }
                         else if (x == 420 && y < 150){
                             y+=10;
                             sentidoNormal= true;
+                            if (y == 130){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[2]);
+                            }
                         }
                         else if (x > 150 && y == 150){
                             x-=10;
                             sentidoNormal = false;
+                            if(x == 400){
+                               sem_wait(&mutex);
+                               sem_post(&s[0]);
+                               sem_post(&mutex);
+                            }
+                            if(x == 300){
+                               sem_wait(&mutex);
+                               sem_post(&mutex);
+                               sem_wait(&s[1]);
+                            }
+                            if(x == 260){
+                               sem_wait(&mutex);
+                               sem_post(&s[2]);
+                               sem_post(&mutex);
+                            }
                         }
                         else{
                             y-=10;
+                            if(y == 130){
+                               sem_wait(&mutex);
+                               sem_post(&s[1]);
+                               sem_post(&mutex);
+                            }
                             sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
@@ -68,18 +98,48 @@ void Trem::run(){
                     case 2: //Trem 2
                         if (y == 30 && x <690){
                             x+=10;
+                            if(x == 440){
+                               sem_wait(&mutex);
+                               sem_post(&s[0]);
+                               sem_post(&mutex);
+                            }
                             sentidoNormal = true;
                         }
                         else if (x == 690 && y < 150){
                             y+=10;
+                            if(y == 130){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[4]);
+                            }
                             sentidoNormal = true;
                         }
                         else if (x > 420 && y == 150){
                             x-=10;
+                            if(x == 570){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[3]);
+                            }
+                            if(x == 530){
+                               sem_wait(&mutex);
+                               sem_post(&s[4]);
+                               sem_post(&mutex);
+                            }
+                            if(x == 440){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[0]);
+                            }
                             sentidoNormal = false;
                         }
                         else{
                             y-=10;
+                            if(y == 130){
+                               sem_wait(&mutex);
+                               sem_post(&s[3]);
+                               sem_post(&mutex);
+                            }
                             sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
@@ -88,13 +148,33 @@ void Trem::run(){
                         if (y == 150 && x < 280){
                             sentidoNormal = true;
                             x+=10;
+                            if(x == 130){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[1]);
+                            }
+                            if(x == 260){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[5]);
+                            }
                         }
                         else if (x == 280 && y < 270){
                             y+=10;
+                            if(y == 170){
+                                sem_wait(&mutex);
+                                sem_post(&s[1]);
+                                sem_post(&mutex);
+                            }
                             sentidoNormal= true;
                         }
                         else if (x > 10 && y == 270){
                             x-=10;
+                            if(x == 260){
+                                sem_wait(&mutex);
+                                sem_post(&s[5]);
+                                sem_post(&mutex);
+                            }
                             sentidoNormal = false;
                         }
                         else{
@@ -107,17 +187,58 @@ void Trem::run(){
                         if (y == 150 && x < 550){
                             sentidoNormal = true;
                             x+=10;
+                            if(x == 300){
+                                sem_wait(&mutex);
+                                sem_post(&s[5]);
+                                sem_post(&mutex);
+                            }
+                            if(x == 400){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[3]);
+                            }
+                            if(x == 440){
+                                sem_wait(&mutex);
+                                sem_post(&s[2]);
+                                sem_post(&mutex);
+                            }
+                            if(x == 530){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[6]);
+                            }
+
                         }
                         else if (x == 550 && y < 270){
                             y+=10;
+                            if(y == 170){
+                                sem_wait(&mutex);
+                                sem_post(&s[3]);
+                                sem_post(&mutex);
+                            }
                             sentidoNormal= true;
                         }
                         else if (x > 280 && y == 270){
                             x-=10;
+                            if(x == 530){
+                                sem_wait(&mutex);
+                                sem_post(&s[6]);
+                                sem_post(&mutex);
+                            }
+                            if(x == 300){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[5]);
+                            }
                             sentidoNormal = false;
                         }
                         else{
                             y-=10;
+                            if(y == 170){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[2]);
+                            }
                             sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
@@ -126,6 +247,16 @@ void Trem::run(){
                         if (y == 150 && x < 820){
                             sentidoNormal = true;
                             x+=10;
+                            if(x == 570){
+                                sem_wait(&mutex);
+                                sem_post(&s[6]);
+                                sem_post(&mutex);
+                            }
+                            if(x == 710){
+                                sem_wait(&mutex);
+                                sem_post(&s[4]);
+                                sem_post(&mutex);
+                            }
                         }
                         else if (x == 820 && y < 270){
                             y+=10;
@@ -133,10 +264,20 @@ void Trem::run(){
                         }
                         else if (x > 550 && y == 270){
                             x-=10;
+                            if(x == 570){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[6]);
+                            }
                             sentidoNormal = false;
                         }
                         else{
                             y-=10;
+                            if(y == 170){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&s[4]);
+                            }
                             sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
@@ -238,7 +379,7 @@ void Trem::entrarTrava(int x, int y){
     for(int i = 0; i < vetorTravas.size(); i++){
         std::pair<int, int> entrada = vetorTravas[i]->getEntradaTrava();
         std::pair<int, int> saida = vetorTravas[i]->getSaidaTrava();
-        if((x == entrada.first - 20 && y == entrada.second) || (x == saida.first + 20 && y == saida.second)){
+        if((x == entrada.first - 20 && y == entrada.second) || (x == saida.first + 20 && y == saida.second) || ((x == entrada.first && y == entrada.second + 20) && sentidoNormal == false)){
             indice = vetorTravas[i]->getId();
             std::cout <<"trem: "<<ID<< " indice de entrada: "<<indice<<"i: "<<i<<std::endl;
             break;
