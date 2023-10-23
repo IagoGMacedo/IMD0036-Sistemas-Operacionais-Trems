@@ -17,17 +17,18 @@ int Trava::estaPerto(int x, int y, bool saindo){
     //std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
     //std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
 
-    //entrando
+    //entrando por cima ou por baixo
     if((x == entradaTrava.first - 20 && y == entradaTrava.second) || (x == saidaTrava.first + 20 && y == saidaTrava.second)){
         //std::cout << "true com - 20 "<<y<<std::endl;
         return 1;
     }
-    //saindo
+    //saindo por cima ou por baixo
     if(((x == entradaTrava.first && y == entradaTrava.second) || (x == saidaTrava.first && y == saidaTrava.second)) && saindo == true){
+        std::cout <<"saindo"<<std::endl;
+        std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
         return 2;
     }
-
-    //longe
+    //longe do semaforo
     return 0;
 }
 
