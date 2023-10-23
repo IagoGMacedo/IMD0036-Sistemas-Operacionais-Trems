@@ -20,13 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     */
 
     //declaração das travas
-    Trava *trava1 =  new Trava(0, std::make_pair(420, 30), std::make_pair(420,150));
-    Trava *trava2 =  new Trava(1, std::make_pair(150,150), std::make_pair(280,150));
-    Trava *trava3 =  new Trava(2, std::make_pair(280,150), std::make_pair(420,150));
-    Trava *trava4 =  new Trava(3, std::make_pair(420,150), std::make_pair(550,150));
-    Trava *trava5 =  new Trava(4, std::make_pair(550,150), std::make_pair(690,150));
-    Trava *trava6 =  new Trava(5, std::make_pair(280,150), std::make_pair(280,270));
-    Trava *trava7 =  new Trava(6, std::make_pair(550,150), std::make_pair(550,270));
+    Trava *trava0 =  new Trava(0, std::make_pair(420, 30), std::make_pair(420,150));
+    Trava *trava1 =  new Trava(1, std::make_pair(150,150), std::make_pair(280,150));
+    Trava *trava2 =  new Trava(2, std::make_pair(280,150), std::make_pair(420,150));
+    Trava *trava3 =  new Trava(3, std::make_pair(420,150), std::make_pair(550,150));
+    Trava *trava4 =  new Trava(4, std::make_pair(550,150), std::make_pair(690,150));
+    Trava *trava5 =  new Trava(5, std::make_pair(280,150), std::make_pair(280,270));
+    Trava *trava6 =  new Trava(6, std::make_pair(550,150), std::make_pair(550,270));
     std::vector<Trava*> travasT1;
     std::vector<Trava*> travasT2;
     std::vector<Trava*> travasT3;
@@ -34,28 +34,29 @@ MainWindow::MainWindow(QWidget *parent) :
     std::vector<Trava*> travasT5;
 
     //travas do trem1
-    travasT1.push_back(trava1);
+    travasT1.push_back(trava0);
     travasT1.push_back(trava2);
-    travasT1.push_back(trava3);
+    travasT1.push_back(trava1);
 
     //travas do trem2
-    travasT2.push_back(trava1);
     travasT2.push_back(trava4);
-    travasT2.push_back(trava5);
+    travasT2.push_back(trava3);
+    travasT2.push_back(trava0);
+
 
     //travas do trem3
-    travasT3.push_back(trava2);
-    travasT3.push_back(trava6);
+    travasT3.push_back(trava1);
+    travasT3.push_back(trava5);
 
     //travas do trem4
+    travasT4.push_back(trava5);
+    travasT4.push_back(trava2);
     travasT4.push_back(trava3);
-    travasT4.push_back(trava4);
     travasT4.push_back(trava6);
-    travasT4.push_back(trava7);
 
     //travas do trem5
-    travasT5.push_back(trava5);
-    travasT5.push_back(trava7);
+    travasT5.push_back(trava6);
+    travasT5.push_back(trava4);
 
 
     //inicializando os semaforos e mutex

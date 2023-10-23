@@ -147,11 +147,11 @@ public:
         label_trilho3_3->setStyleSheet(QString::fromUtf8("QLabel { background: yellow}"));
         label_trem3 = new QLabel(centralWidget);
         label_trem3->setObjectName(QString::fromUtf8("label_trem3"));
-        label_trem3->setGeometry(QRect(150, 270, 21, 17));
+        label_trem3->setGeometry(QRect(40, 270, 21, 17));
         label_trem3->setStyleSheet(QString::fromUtf8("QLabel { background: red}"));
         label_trem4 = new QLabel(centralWidget);
         label_trem4->setObjectName(QString::fromUtf8("label_trem4"));
-        label_trem4->setGeometry(QRect(420, 270, 21, 17));
+        label_trem4->setGeometry(QRect(330, 270, 21, 17));
         label_trem4->setStyleSheet(QString::fromUtf8("QLabel { background: red}"));
         label_trem5 = new QLabel(centralWidget);
         label_trem5->setObjectName(QString::fromUtf8("label_trem5"));

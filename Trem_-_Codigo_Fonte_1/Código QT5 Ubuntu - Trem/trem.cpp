@@ -153,20 +153,32 @@ void Trem::run(){
 bool Trem::checkPossoMover(){
     if(velocidadeNaoZerada){
         int estadoPosicao = verificaAndar();
-        std::cout <<"estado posicao: "<<estadoPosicao <<std::endl;
+        //std::cout <<"estado posicao: "<<estadoPosicao <<std::endl;
         if (estadoPosicao == 0){
             return true;
         }
         else if(estadoPosicao == 1){
             sem_wait(&mutex);
+            std::cout << "entrei" <<std::endl;
             entrarTrava(x,y);
         }
         else if(estadoPosicao == 2){
             sem_wait(&mutex);
+            std::cout << "sai" <<std::endl;
             sairTrava(x,y);
         }
         else if(estadoPosicao == 3){
-
+            /*
+            sem_wait(&mutex);
+            if(sentidoNormal){
+                entrarTrava(x-20,y);
+            } else{
+                 entrarTrava(x+20,y);
+            }
+            sem_wait(&mutex);
+            sairTrava(x,y);
+            std::cout << "intersecao entre entrada e saida!!!!"<<std::endl;
+            */
         }
         return true;
         /*
@@ -201,6 +213,13 @@ int Trem::verificaAndar(){
         std::cout<<"result"<<i<<": "<<result[i]<<", ";
     }
     std::cout<<""<<std::endl;
+    /*
+    if(result[2] > 1){
+        //saindo de uma trava e entrando em outra
+        return 3;
+    }
+    */
+
     if(result[1] > 0){
         //entrando
         //saindo = true; //entrei no trilho, proximo passo é sair
@@ -211,19 +230,17 @@ int Trem::verificaAndar(){
          //saindo = false;
         return 2; //estou saindo, então depois vou ENTRAR
     }
-    if(result[1] > 0 && result[2] > 0){
-        //saindo de uma trava e entrando em outra
-        return 3;
-    }
     return 0;
 }
 void Trem::entrarTrava(int x, int y){
+    std::cout <<"pelo menos entrei na entrarTrava"<<std::endl;
     int indice;
     for(int i = 0; i < vetorTravas.size(); i++){
         std::pair<int, int> entrada = vetorTravas[i]->getEntradaTrava();
         std::pair<int, int> saida = vetorTravas[i]->getSaidaTrava();
         if((x == entrada.first - 20 && y == entrada.second) || (x == saida.first + 20 && y == saida.second)){
             indice = vetorTravas[i]->getId();
+            std::cout <<"trem: "<<ID<< " indice de entrada: "<<indice<<"i: "<<i<<std::endl;
             break;
         }
     }
@@ -239,7 +256,8 @@ void Trem::sairTrava(int x, int y){
         std::pair<int, int> saida = vetorTravas[i]->getSaidaTrava();
         //x == entrada.first && y == entrada.second + 20
         if(((x == entrada.first && y == entrada.second) && sentidoNormal == false)||((x == saida.first && y == saida.second) && sentidoNormal == true)){
-            indice = vetorTravas[i]->getId();;
+            indice = vetorTravas[i]->getId();
+            std::cout <<"trem: "<<ID<< " indice de saida: "<<indice<<"i: "<<i<<std::endl;
             break;
         }
     }
