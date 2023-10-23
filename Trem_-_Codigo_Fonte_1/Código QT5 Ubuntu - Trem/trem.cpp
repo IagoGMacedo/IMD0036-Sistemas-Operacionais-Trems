@@ -3,12 +3,9 @@
 #include <iostream>
 #include <semaphore.h>
 #include <utility>
-
+//Construtor
 sem_t s[7];
 sem_t mutex;
-
-
-//Construtor
 Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
@@ -25,6 +22,7 @@ Trem::Trem(int ID, int x, int y, std::vector<Trava*> trava, std::vector<int> min
     velocidade = 100;
     podeMover = true;
     objetosTrava = trava;
+    saindo = 0;
     this->minhasTravas = minhasTravas;
 }
 
@@ -51,39 +49,39 @@ void Trem::run(){
             switch(ID){
                     case 1:     //Trem 1
                         if (y == 30 && x <420){
-                            saindo = 0;
+                            saindo = false;
                             x+=10;
                         }
                         else if (x == 420 && y < 150){
                             y+=10;
-                            saindo = 1;
+                            saindo = true;
                         }
                         else if (x > 150 && y == 150){
                             x-=10;
-                            saindo = 1;
+                            saindo = true;
                         }
                         else{
                             y-=10;
-                            saindo = 0;
+                            saindo = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
                     case 2: //Trem 2
                         if (y == 30 && x <690){
                             x+=10;
-                            saindo = 0;
+                            saindo = false;
                         }
                         else if (x == 690 && y < 150){
                             y+=10;
-                            saindo = 1;
+                            saindo = true;
                         }
                         else if (x > 420 && y == 150){
                             x-=10;
-                            saindo = 1;
+                            saindo = true;
                         }
                         else{
                             y-=10;
-                            saindo = 0;
+                            saindo = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
@@ -105,12 +103,10 @@ bool Trem::checkPossoMover(){
         else if(verificar == 1){
             sem_wait(&mutex);
             entrarTrava(x,y);
-            sem_post(&mutex);
         }
         else if(verificar == 2){
             sem_wait(&mutex);
             sairTrava(x,y);
-            sem_post(&mutex);
         }
         else if(verificar == 3){
 
@@ -142,7 +138,7 @@ bool Trem::checkPossoMover(){
 int Trem::verificaAndar(std::vector<Trava *> travas){
     int result[3]= {0, 0, 0};
     for(int i = 0; i < minhasTravas.size(); i++){
-        result[travas[minhasTravas[i]]->estaPerto(this->x, this->y)] += 1;
+        result[travas[minhasTravas[i]]->estaPerto(this->x, this->y, this->saindo)] += 1;
     }
     if(result[1] > 0 && result[2] > 0){
         return 3;
@@ -165,19 +161,34 @@ void Trem::entrarTrava(int x, int y){
             break;
         }
     }
-    sem_wait(&s[indice]);
+    int semValue;
+    sem_post(&mutex);
+    sem_wait(&s[0]);
+    if (sem_getvalue(&s[0], &semValue) == 0) {
+            std::cout << "O valor em entrada é: "<< semValue << std::endl;
+        } else {
+            std::cout << "Erro em entrada" << std::endl;
+        }
 }
 void Trem::sairTrava(int x, int y){
     int indice;
     for(int i = 0; i < minhasTravas.size(); i++){
         std::pair<int, int> entrada = objetosTrava[minhasTravas[i]]->getEntradaTrava();
         std::pair<int, int> saida = objetosTrava[minhasTravas[i]]->getSaidaTrava();
-        if((x == entrada.first && y == entrada.second + 20) || (x == saida.first && y == saida.second -20)){
+        //x == entrada.first && y == entrada.second + 20
+        if(((x == entrada.first && y == entrada.second) || (x == saida.first && y == saida.second)) && saindo == true){
             indice = i;
             break;
         }
     }
-    sem_post(&s[indice]);
+    int semValue;
+    sem_post(&mutex);
+    sem_post(&s[0]);
+    if (sem_getvalue(&s[0], &semValue) == 0) {
+            std::cout << "O valor em saida é: "<< semValue << std::endl;
+        } else {
+            std::cout << "Erro em saida" << std::endl;
+        }
 }
 
 int Trem::getVelocidade(){

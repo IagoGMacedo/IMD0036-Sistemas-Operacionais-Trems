@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QRect>
 #include <utility>
+#include <semaphore.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,12 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
     trem4 = new Trem(4,280,150);
     trem5 = new Trem(5,550,150);
     */
-
     Trava *trava1 =  new Trava(ui->label_trilho3->geometry(), false, std::make_pair(420, 30), std::make_pair(420,150));
     std::vector<Trava*> travas;
     travas.push_back(trava1);
     std::vector<int> idTravasTrem;
     idTravasTrem.push_back(0);
+
+    for(int i = 0; i <7; i++){
+        sem_init(&s[i], 0, 1);
+    }
+    sem_init(&mutex, 0, 1);
     trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travas, idTravasTrem); // 60,30
     trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travas, idTravasTrem); // 330,30
 

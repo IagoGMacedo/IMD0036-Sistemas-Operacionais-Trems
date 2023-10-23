@@ -11,7 +11,7 @@ Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> ent
 
 }
 
-int Trava::estaPerto(int x, int y){
+int Trava::estaPerto(int x, int y, bool saindo){
     //std::cout << "X da entrada "<< entradaTrava.first << "Y da entrada"<<entradaTrava.second<<std::endl;
     //std::cout << "X da saida "<< saidaTrava.first << "Y da saida"<<saidaTrava.second<<std::endl;
     //std::cout << "X parametro: "<<x << "Y parametro: "<<y<<std::endl;
@@ -23,7 +23,7 @@ int Trava::estaPerto(int x, int y){
         return 1;
     }
     //saindo
-    if((x == entradaTrava.first && y == entradaTrava.second + 20) || (x == saidaTrava.first && y == saidaTrava.second -20)){
+    if(((x == entradaTrava.first && y == entradaTrava.second) || (x == saidaTrava.first && y == saidaTrava.second)) && saindo == true){
         return 2;
     }
 

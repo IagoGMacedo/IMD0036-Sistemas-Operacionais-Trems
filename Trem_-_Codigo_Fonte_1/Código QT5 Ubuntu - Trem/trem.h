@@ -3,8 +3,10 @@
 
 #include <QThread>
 #include <vector>
+#include <semaphore.h>
 #include "trava.h"
-
+extern sem_t s[7];
+extern sem_t mutex;
 /*
  * Classe Trem herda QThread
  * Classe Trem passa a ser uma thread.
