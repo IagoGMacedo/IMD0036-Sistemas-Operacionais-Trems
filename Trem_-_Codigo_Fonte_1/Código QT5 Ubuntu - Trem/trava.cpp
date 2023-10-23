@@ -2,9 +2,8 @@
 #include <iostream>
 #include <utility>
 
-Trava::Trava(QRect p_geometria, bool p_caminhoHorizontal, std::pair<int,int> entrada, std::pair<int,int> saida){
-    geometria = p_geometria;
-    caminhoHorizontal = p_caminhoHorizontal;
+Trava::Trava(int id, std::pair<int,int> entrada, std::pair<int,int> saida){
+    idTrava = id;
     idTremPercorrendo = -1;
     entradaTrava = entrada;
     saidaTrava = saida;
@@ -38,4 +37,8 @@ std::pair<int, int> Trava::getEntradaTrava(){
 
 std::pair<int,int> Trava::getSaidaTrava(){
     return this->saidaTrava;
+}
+
+int Trava::getId(){
+    return this->idTrava;
 }

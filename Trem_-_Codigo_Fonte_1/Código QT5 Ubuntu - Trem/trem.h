@@ -18,7 +18,7 @@ class Trem: public QThread{
  Q_OBJECT
 public:
     Trem(int,int,int);  //construtor
-    Trem(int,int,int, std::vector<Trava*>, std::vector<int>);
+    Trem(int,int,int, std::vector<Trava*>);
     void run();         //função a ser executada pela thread
     int getVelocidade();
     void setVelocidade(int vel);
@@ -44,7 +44,6 @@ private:
 
    int quantidadeTravas; //diz quantas travas esse trem possui
    std::vector<Trava*> vetorTravas;
-   std::vector<int> vetorIdTravas;
 
 };
 

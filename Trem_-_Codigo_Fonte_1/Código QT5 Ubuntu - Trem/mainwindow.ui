@@ -49,9 +49,9 @@
    <widget class="QLabel" name="label_trilho2">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>280</x>
       <y>150</y>
-      <width>250</width>
+      <width>141</width>
       <height>17</height>
      </rect>
     </property>
@@ -157,7 +157,7 @@
      <rect>
       <x>440</x>
       <y>150</y>
-      <width>250</width>
+      <width>131</width>
       <height>17</height>
      </rect>
     </property>
@@ -203,9 +203,9 @@
    <widget class="QLabel" name="label_trilho1_3">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>150</x>
       <y>150</y>
-      <width>250</width>
+      <width>131</width>
       <height>17</height>
      </rect>
     </property>
@@ -269,7 +269,7 @@
      <rect>
       <x>570</x>
       <y>150</y>
-      <width>250</width>
+      <width>141</width>
       <height>17</height>
      </rect>
     </property>
@@ -489,6 +489,38 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label_trilho1_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>131</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: yellow}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_trilho1_6">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>150</y>
+      <width>141</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel { background: yellow}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>label_trilho1</zorder>
    <zorder>label_trilho2</zorder>
    <zorder>label_trilho3</zorder>
@@ -507,16 +539,18 @@
    <zorder>label_trilho4_5</zorder>
    <zorder>label_trilho2_5</zorder>
    <zorder>label_trilho3_3</zorder>
-   <zorder>label_trem3</zorder>
-   <zorder>label_trem4</zorder>
-   <zorder>label_trem5</zorder>
-   <zorder>label_trem1</zorder>
-   <zorder>label_trem2</zorder>
    <zorder>sliderTrem1</zorder>
    <zorder>sliderTrem2</zorder>
    <zorder>sliderTrem4</zorder>
    <zorder>sliderTrem3</zorder>
    <zorder>sliderTrem5</zorder>
+   <zorder>label_trilho1_4</zorder>
+   <zorder>label_trilho1_6</zorder>
+   <zorder>label_trem2</zorder>
+   <zorder>label_trem1</zorder>
+   <zorder>label_trem3</zorder>
+   <zorder>label_trem4</zorder>
+   <zorder>label_trem5</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
