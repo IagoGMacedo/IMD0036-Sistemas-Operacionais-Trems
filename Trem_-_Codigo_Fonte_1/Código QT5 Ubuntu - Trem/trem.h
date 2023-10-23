@@ -35,7 +35,7 @@ private:
    int velocidade;  //Velocidade. É o tempo de dormir em milisegundos entre a mudança de posição do trem
 
    bool velocidadeNaoZerada; //Diz se o trem tem velocidade o suficiente para se mover
-   bool saindo; //se o modo em que ele se movimenta irá leva-lo para entrada ou saida de uma "trava"
+   bool sentidoNormal; //se o modo em que ele se movimenta irá leva-lo para entrada ou saida de uma "trava"
 
    bool checkPossoMover(); //função que analisará cada trava e ver se o trem pode se mexer
    int verificaAndar();

@@ -10,7 +10,7 @@ Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
     this->y = y;
-    saindo = false;
+    sentidoNormal = false;
     velocidade = 100;
     velocidadeNaoZerada = true;
 }
@@ -22,7 +22,7 @@ Trem::Trem(int ID, int x, int y, std::vector<Trava*> p_vetorTravas, std::vector<
     velocidade = 100;
     velocidadeNaoZerada = true;
     vetorTravas = p_vetorTravas;
-    saindo = false;
+    sentidoNormal = false;
     this->vetorIdTravas = p_vetorIdTravas;
 }
 
@@ -49,39 +49,39 @@ void Trem::run(){
             switch(ID){
                     case 1:     //Trem 1
                         if (y == 30 && x <420){
-                            //saindo = false;
+                            sentidoNormal = true;
                             x+=10;
                         }
                         else if (x == 420 && y < 150){
                             y+=10;
-                            //saindo = true;
+                            sentidoNormal= true;
                         }
                         else if (x > 150 && y == 150){
                             x-=10;
-                            //saindo = true;
+                            sentidoNormal = false;
                         }
                         else{
                             y-=10;
-                            //saindo = false;
+                            sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
                     case 2: //Trem 2
                         if (y == 30 && x <690){
                             x+=10;
-                            //saindo = false;
+                            sentidoNormal = true;
                         }
                         else if (x == 690 && y < 150){
                             y+=10;
-                            //saindo = true;
+                            sentidoNormal = true;
                         }
                         else if (x > 420 && y == 150){
                             x-=10;
-                            //saindo = true;
+                            sentidoNormal = false;
                         }
                         else{
                             y-=10;
-                            //saindo = false;
+                            sentidoNormal = false;
                         }
                         emit updateGUI(ID, x,y);    //Emite um sinal
                         break;
@@ -139,7 +139,7 @@ bool Trem::checkPossoMover(){
 int Trem::verificaAndar(){
     int result[3]= {0, 0, 0};
     for(int i = 0; i < vetorIdTravas.size(); i++){
-        result[vetorTravas[vetorIdTravas[i]]->estaPerto(this->x, this->y, this->saindo)] += 1;
+        result[vetorTravas[vetorIdTravas[i]]->estaPerto(this->x, this->y, this->sentidoNormal)] += 1;
     }
     for(int i =0;i<3;i++){
         std::cout<<"result"<<i<<": "<<result[i]<<", ";
@@ -159,7 +159,6 @@ int Trem::verificaAndar(){
         //saindo de uma trava e entrando em outra
         return 3;
     }
-    saindo = false;
     return 0;
 }
 void Trem::entrarTrava(int x, int y){
@@ -177,7 +176,6 @@ void Trem::entrarTrava(int x, int y){
     sem_wait(&s[0]);
     if (sem_getvalue(&s[0], &semValue) == 0) {
             std::cout << "O valor em entrada é: "<< semValue << std::endl;
-            this->saindo = true;
         } else {
             std::cout << "Erro em entrada" << std::endl;
         }
@@ -189,7 +187,7 @@ void Trem::sairTrava(int x, int y){
         std::pair<int, int> entrada = vetorTravas[vetorIdTravas[i]]->getEntradaTrava();
         std::pair<int, int> saida = vetorTravas[vetorIdTravas[i]]->getSaidaTrava();
         //x == entrada.first && y == entrada.second + 20
-        if(((x == entrada.first && y == entrada.second) || (x == saida.first && y == saida.second)) /*&& saindo == true*/){
+        if(((x == entrada.first && y == entrada.second) && sentidoNormal == false)||((x == saida.first && y == saida.second) && sentidoNormal == true)){
             indice = i;
             break;
         }
@@ -199,7 +197,6 @@ void Trem::sairTrava(int x, int y){
     sem_post(&s[0]);
     if (sem_getvalue(&s[0], &semValue) == 0) {
             std::cout << "O valor em saida é: "<< semValue << std::endl;
-            this->saindo = false;
         } else {
             std::cout << "Erro em saida" << std::endl;
         }
