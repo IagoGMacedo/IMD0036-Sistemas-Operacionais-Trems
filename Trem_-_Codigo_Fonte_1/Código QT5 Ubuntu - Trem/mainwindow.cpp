@@ -64,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent) :
         sem_init(&s[i], 0, 1);
     }
     sem_init(&mutex, 0, 1);
+    for(int i = 0; i <3; i++){
+        sem_init(&duo[i], 0, 2);
+    }
 
     //inicializando os trems
     trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travasT1);

@@ -6,6 +6,7 @@
 //Construtor
 sem_t s[7];
 sem_t mutex;
+sem_t duo[3];
 Trem::Trem(int ID, int x, int y){
     this->ID = ID;
     this->x = x;
@@ -53,6 +54,9 @@ void Trem::run(){
                             if (x == 400){
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
+                                sem_wait(&duo[1]);
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
                                 sem_wait(&s[0]);
                             }
                         }
@@ -60,6 +64,9 @@ void Trem::run(){
                             y+=10;
                             sentidoNormal= true;
                             if (y == 130){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[0]);
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
                                 sem_wait(&s[2]);
@@ -71,6 +78,7 @@ void Trem::run(){
                             if(x == 400){
                                sem_wait(&mutex);
                                sem_post(&s[0]);
+                               sem_post(&duo[1]);
                                sem_post(&mutex);
                             }
                             if(x == 300){
@@ -81,6 +89,7 @@ void Trem::run(){
                             if(x == 260){
                                sem_wait(&mutex);
                                sem_post(&s[2]);
+                               sem_post(&duo[0]);
                                sem_post(&mutex);
                             }
                         }
@@ -110,6 +119,9 @@ void Trem::run(){
                             if(y == 130){
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
+                                sem_wait(&duo[2]);
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
                                 sem_wait(&s[4]);
                             }
                             sentidoNormal = true;
@@ -119,11 +131,15 @@ void Trem::run(){
                             if(x == 570){
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
+                                sem_wait(&duo[1]);
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
                                 sem_wait(&s[3]);
                             }
                             if(x == 530){
                                sem_wait(&mutex);
                                sem_post(&s[4]);
+                               sem_post(&duo[2]);
                                sem_post(&mutex);
                             }
                             if(x == 440){
@@ -138,6 +154,7 @@ void Trem::run(){
                             if(y == 130){
                                sem_wait(&mutex);
                                sem_post(&s[3]);
+                               sem_post(&duo[1]);
                                sem_post(&mutex);
                             }
                             sentidoNormal = false;
@@ -149,6 +166,9 @@ void Trem::run(){
                             sentidoNormal = true;
                             x+=10;
                             if(x == 130){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[0]);
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
                                 sem_wait(&s[1]);
@@ -164,6 +184,7 @@ void Trem::run(){
                             if(y == 170){
                                 sem_wait(&mutex);
                                 sem_post(&s[1]);
+                                sem_post(&duo[0]);
                                 sem_post(&mutex);
                             }
                             sentidoNormal= true;
@@ -190,6 +211,7 @@ void Trem::run(){
                             if(x == 300){
                                 sem_wait(&mutex);
                                 sem_post(&s[5]);
+                                sem_post(&duo[0]);
                                 sem_post(&mutex);
                             }
                             if(x == 400){
@@ -200,6 +222,7 @@ void Trem::run(){
                             if(x == 440){
                                 sem_wait(&mutex);
                                 sem_post(&s[2]);
+                                sem_post(&duo[1]);
                                 sem_post(&mutex);
                             }
                             if(x == 530){
@@ -214,6 +237,7 @@ void Trem::run(){
                             if(y == 170){
                                 sem_wait(&mutex);
                                 sem_post(&s[3]);
+                                sem_post(&duo[2]);
                                 sem_post(&mutex);
                             }
                             sentidoNormal= true;
@@ -226,6 +250,15 @@ void Trem::run(){
                                 sem_post(&mutex);
                             }
                             if(x == 300){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[0]);
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[1]);
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[2]);
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
                                 sem_wait(&s[5]);
@@ -250,6 +283,7 @@ void Trem::run(){
                             if(x == 570){
                                 sem_wait(&mutex);
                                 sem_post(&s[6]);
+                                sem_post(&duo[2]);
                                 sem_post(&mutex);
                             }
                             if(x == 710){
@@ -265,6 +299,9 @@ void Trem::run(){
                         else if (x > 550 && y == 270){
                             x-=10;
                             if(x == 570){
+                                sem_wait(&mutex);
+                                sem_post(&mutex);
+                                sem_wait(&duo[2]);
                                 sem_wait(&mutex);
                                 sem_post(&mutex);
                                 sem_wait(&s[6]);

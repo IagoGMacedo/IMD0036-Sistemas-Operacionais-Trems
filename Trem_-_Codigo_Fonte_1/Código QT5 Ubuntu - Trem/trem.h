@@ -7,6 +7,7 @@
 #include "trava.h"
 extern sem_t s[7];
 extern sem_t mutex;
+extern sem_t duo[3];
 /*
  * Classe Trem herda QThread
  * Classe Trem passa a ser uma thread.
