@@ -9,54 +9,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    //Cria o trem com seu (ID, posição X, posição Y)
-    /*
-    trem1 = new Trem(1,150,30); // 60,30
-    trem2 = new Trem(2,420,30); // 330,30
-    trem3 = new Trem(3,10,150);
-    trem4 = new Trem(4,280,150);
-    trem5 = new Trem(5,550,150);
-    */
-
-    //declaração das travas
-    Trava *trava0 =  new Trava(0, std::make_pair(420, 30), std::make_pair(420,150));
-    Trava *trava1 =  new Trava(1, std::make_pair(150,150), std::make_pair(280,150));
-    Trava *trava2 =  new Trava(2, std::make_pair(280,150), std::make_pair(420,150));
-    Trava *trava3 =  new Trava(3, std::make_pair(420,150), std::make_pair(550,150));
-    Trava *trava4 =  new Trava(4, std::make_pair(550,150), std::make_pair(690,150));
-    Trava *trava5 =  new Trava(5, std::make_pair(280,150), std::make_pair(280,270));
-    Trava *trava6 =  new Trava(6, std::make_pair(550,150), std::make_pair(550,270));
-    std::vector<Trava*> travasT1;
-    std::vector<Trava*> travasT2;
-    std::vector<Trava*> travasT3;
-    std::vector<Trava*> travasT4;
-    std::vector<Trava*> travasT5;
-
-    //travas do trem1
-    travasT1.push_back(trava0);
-    travasT1.push_back(trava2);
-    travasT1.push_back(trava1);
-
-    //travas do trem2
-    travasT2.push_back(trava4);
-    travasT2.push_back(trava3);
-    travasT2.push_back(trava0);
-
-
-    //travas do trem3
-    travasT3.push_back(trava1);
-    travasT3.push_back(trava5);
-
-    //travas do trem4
-    travasT4.push_back(trava5);
-    travasT4.push_back(trava2);
-    travasT4.push_back(trava3);
-    travasT4.push_back(trava6);
-
-    //travas do trem5
-    travasT5.push_back(trava6);
-    travasT5.push_back(trava4);
+    //Cria os trens com seu (ID, posição X, posição Y)
+    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y());
+    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y());
+    trem3 = new Trem(3,ui->label_trem3->x(),ui->label_trem3->y());
+    trem4 = new Trem(4,ui->label_trem4->x(),ui->label_trem4->y());
+    trem5 = new Trem(5,ui->label_trem5->x(),ui->label_trem5->y());
 
 
     //inicializando os semaforos e mutex
@@ -67,17 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     for(int i = 0; i <3; i++){
         sem_init(&duo[i], 0, 2);
     }
-
-    //inicializando os trems
-    trem1 = new Trem(1,ui->label_trem1->x(),ui->label_trem1->y(), travasT1);
-    trem2 = new Trem(2,ui->label_trem2->x(),ui->label_trem2->y(), travasT2);
-    trem3 = new Trem(3,ui->label_trem3->x(),ui->label_trem3->y(), travasT3);
-    trem4 = new Trem(4,ui->label_trem4->x(),ui->label_trem4->y(), travasT4);
-    trem5 = new Trem(5,ui->label_trem5->x(),ui->label_trem5->y(), travasT5);
-
-
-
-
 
 
     /*
@@ -93,6 +40,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
     connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
+    //inicializando os trens
+    trem1->start();
+    trem2->start();
+    trem3->start();
+    trem4->start();
+    trem5->start();
 
 }
 
@@ -121,31 +74,14 @@ void MainWindow::updateInterface(int id, int x, int y){
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-}
-
-/*
- * Ao clicar, trens começam execução
- */
-void MainWindow::on_pushButton_clicked()
-{
-    trem1->start();
-    trem2->start();
-    trem3->start();
-    trem4->start();
-    trem5->start();
-}
-
-/*
- * Ao clicar, trens param execução
- */
-void MainWindow::on_pushButton_2_clicked()
-{
+    //encerrando os trens
     trem1->terminate();
     trem2->terminate();
     trem3->terminate();
     trem4->terminate();
     trem5->terminate();
+
+    delete ui;
 }
 
 void MainWindow::on_sliderTrem1_valueChanged(int value)

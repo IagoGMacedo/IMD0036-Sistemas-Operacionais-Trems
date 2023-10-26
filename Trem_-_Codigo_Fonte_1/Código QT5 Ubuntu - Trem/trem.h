@@ -4,7 +4,6 @@
 #include <QThread>
 #include <vector>
 #include <semaphore.h>
-#include "trava.h"
 extern sem_t s[7];
 extern sem_t mutex;
 extern sem_t duo[3];
@@ -19,7 +18,6 @@ class Trem: public QThread{
  Q_OBJECT
 public:
     Trem(int,int,int);  //construtor
-    Trem(int,int,int, std::vector<Trava*>);
     void run();         //função a ser executada pela thread
     int getVelocidade();
     void setVelocidade(int vel);
@@ -37,15 +35,6 @@ private:
 
    bool velocidadeNaoZerada; //Diz se o trem tem velocidade o suficiente para se mover
    bool sentidoNormal; //se o modo em que ele se movimenta irá leva-lo para entrada ou saida de uma "trava"
-
-   bool checkPossoMover(); //função que analisará cada trava e ver se o trem pode se mexer
-   int verificaAndar();
-   void sairTrava(int x, int y);
-   void entrarTrava(int x, int y);
-
-   int quantidadeTravas; //diz quantas travas esse trem possui
-   std::vector<Trava*> vetorTravas;
-
 };
 
 #endif // TREM_H
