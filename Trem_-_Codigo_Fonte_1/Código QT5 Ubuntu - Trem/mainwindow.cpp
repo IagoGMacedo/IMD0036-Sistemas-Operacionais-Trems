@@ -18,10 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     //inicializando os semaforos e mutex
+
+    //semaforos das 7 regiões criticas
     for(int i = 0; i <7; i++){
         sem_init(&s[i], 0, 1);
     }
+
+    //semaforo mutex
     sem_init(&mutex, 0, 1);
+
+    //semaforos para as intersecções
     for(int i = 0; i <3; i++){
         sem_init(&duo[i], 0, 2);
     }
@@ -80,6 +86,15 @@ MainWindow::~MainWindow()
     trem3->terminate();
     trem4->terminate();
     trem5->terminate();
+
+    //encerrando todos os semaforos
+    for(int i = 0; i <7; i++){
+        sem_destroy(&s[i]);
+    }
+    sem_destroy(&mutex);
+    for(int i = 0; i <3; i++){
+        sem_destroy(&duo[i]);
+    }
 
     delete ui;
 }
